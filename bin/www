@@ -6,22 +6,20 @@
 
 var app = require('../app');
 var debug = require('debug')('itsbattleroyale:server');
-var http = require('http');
-var socketIo = require('socket.io');
+var UUID = require('node-uuid')
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-var io = socketIo.listen(server);
+var server = require('http').Server(app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -90,3 +88,24 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+//Socket Stuff
+
+var io = require('socket.io')(server);
+
+var numClients = 0;
+
+io.use(function (socket, next) {
+  var handshakeData = socket.request;
+  //if error log error - else:
+  next();
+});
+
+io.on('connection', function (client) {
+  client.userid = UUID();
+
+  client.emit('onconnected', { id: client.userid });
+
+  //log when someone connects
+  console.log('\t socket.io:: player ' + client.userid + ' connected');
+});

@@ -1,3 +1,9 @@
+//Constants
+var socket = io.connect('/'),
+    canvasWidth = 1000,
+    canvasHeight = 800;
+
+
 canvasContainer = document.getElementById('canvascontainer');
 canvas = document.createElement('canvas');
 canvas.id = "myCanvas";
@@ -15,10 +21,10 @@ cC.fillRect(0, 0, 100, 100);
 canvas.style.border = '1px solid #000';
 
 function fitToContainer(canvas) {
-    // Make it visually fill the positioned parent
-    canvas.style.width = '100%';
-    canvas.style.height = canvas.scrollWidth;
-    // ...then set the internal size to match
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 }
+
+socket.on('onconnected', function (data) {
+    console.log('Connected successfully to the socket.io server. My server side ID is ' + data.id);
+});
