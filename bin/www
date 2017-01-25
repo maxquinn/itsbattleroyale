@@ -93,13 +93,13 @@ function onListening() {
 
 var io = require('socket.io')(server);
 
-var numClients = 0;
-
 io.use(function (socket, next) {
   var handshakeData = socket.request;
   //if error log error - else:
   next();
 });
+
+game_server = require('../public/javascripts/battleroyale.server.js');
 
 io.on('connection', function (client) {
   client.userid = UUID();
