@@ -1,4 +1,4 @@
-var game_server = { games: {}, numberOfGames: 0 }
+var game_server = { games: {}, numberOfGames: 0 };
 var UUID = require('node-uuid');
 
 global.window = global.document = global;
@@ -36,7 +36,7 @@ game_server.findGame = function (player) {
     else {
         this.createGame(player);
     }
-}
+};
 
 game_server.createGame = function(player) {
     //create new game
@@ -53,8 +53,8 @@ game_server.createGame = function(player) {
     this.numberOfGames++;
 
     newGame.gamecore = new game_core(newGame); //create new game instance - function is located in battleroyale.js
-}
+};
 
 game_server.startGame = function(game) {
     console.log('game started');
-}
+};
